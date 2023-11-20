@@ -6,32 +6,58 @@
     <link rel="stylesheet" href="/src/styles/index.css" />
   </head>
   <body>
-    <main class="h-[100vh] w-full bg-primary flex flex-col">
-      <h1 class="sm:text-5xl text-3xl font-bold text-center my-10">
-        The Word Counter App
-      </h1>
-
-      <div class="space-y-3 w-full flex flex-col items-center justify-center">
-        <div class="card bg-base-300 w-10/12">
+    <main class="h-[100vh] w-full bg-primary flex flex-col" id="app">
+      <div
+        class="space-y-3 w-full flex flex-col items-center justify-center my-10"
+        id="main-container"
+      >
+        <div class="card bg-base-300 xl:w-5/12 w-10/12">
           <div class="card-body">
             <form
               id="form"
-              class="flex flex-col w-full items-center justify-center"
+              class="form-control h-56 items-center justify-center space-y-3"
             >
-              <div>
+              <div class="w-full flex flex-col items-center justify-center">
+                <label
+                  for="file"
+                  class="label xl:w-6/12 w-10/12 text-xs uppercase font-bold"
+                >
+                  <span class="label-text"> Select a text file </span>
+                </label>
                 <input
                   type="file"
-                  class="file-input file-input-primary w-full max-w-xs"
+                  class="file-input file-input-sm file-input-primary xl:w-6/12 w-10/12"
                 />
               </div>
-              <div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+              <div class="w-full flex flex-col items-center justify-center">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-sm xl:w-6/12 w-10/12"
+                >
+                  Submit
+                </button>
               </div>
             </form>
           </div>
         </div>
 
-        <div class="card bg-base-300 w-10/12" id="occurences-card"></div>
+        <div
+          id="occurrences-card"
+          class="card bg-base-300 xl:w-5/12 w-10/12 hidden"
+        >
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr class="uppercase">
+                  <th>Rank</th>
+                  <th>Word</th>
+                  <th>Occurrences</th>
+                </tr>
+              </thead>
+              <tbody id="table-body text-i"></tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </main>
     <script type="module" src="/src/main.ts"></script>

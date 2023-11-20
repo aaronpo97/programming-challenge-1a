@@ -3,6 +3,7 @@ import processText from "../utilities/processText";
 
 const handleSubmit = (event: Event) => {
   event.preventDefault();
+
   const file = fileInput.files?.[0];
   if (!file) {
     return;
@@ -14,27 +15,46 @@ const handleSubmit = (event: Event) => {
   }
 
   const reader = new FileReader();
+
   reader.onload = (event) => {
+    /*
+     * Table structure:
+     *
+     * <tr>
+     *   <th>{ranking}</th>
+     *   <td>{word}/td>
+     *   <td>{occurrences}</td>
+     * </tr>
+     *
+     */
+
+    const tableBody = document.getElementById("table-body")!;
+    tableBody.innerHTML = "";
+
     const content = event.target!.result as string;
-    const occurences = processText(content);
+    const occurrences = processText(content);
 
-    const cardBodyDiv = document.createElement("div");
-    cardBodyDiv.classList.add("card-body");
+    console.log(occurrencesCard);
+    occurrencesCard.classList.remove("hidden");
 
-    occurrencesCard.appendChild(cardBodyDiv);
+    occurrences.forEach(([word, count], index) => {
+      const rankingCell = document.createElement("th");
+      const wordCell = document.createElement("td");
+      const occurrencesCell = document.createElement("td");
 
-    const list = document.createElement("ol");
-    list.classList.add("list-group");
+      rankingCell.textContent = (index + 1).toString();
+      wordCell.textContent = word;
+      occurrencesCell.textContent = count.toString();
 
-    occurences.forEach(([word, count]) => {
-      const listItem = document.createElement("li");
-      listItem.classList.add("list-group-item");
-      listItem.textContent = `${word}: ${count}`;
-      list.appendChild(listItem);
+      const tableRow = document.createElement("tr");
+      tableRow.appendChild(rankingCell);
+      tableRow.appendChild(wordCell);
+      tableRow.appendChild(occurrencesCell);
+
+      tableBody.appendChild(tableRow);
     });
-
-    cardBodyDiv.appendChild(list);
   };
+
   reader.readAsText(file);
 };
 
